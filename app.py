@@ -9,7 +9,11 @@ def add_task(title, description, due_date=None):
     tasks.append(new_task)
     save_tasks(tasks)
     print(f"✅ Task added with ID {task_id}.")
-
+def list_tasks(today_only=False):
+    tasks = load_tasks()
+    if today_only:
+        tasks = filter_today_tasks(tasks)
+        print("📅 Tasks Due Today:")
 def main():
     parser = argparse.ArgumentParser(description="📝 CLI To-Do List Manager")
     subparsers = parser.add_subparsers(dest="command")

@@ -15,6 +15,16 @@ def list_tasks(today_only=False):
     if today_only:
         tasks = filter_today_tasks(tasks)
         print("📅 Tasks Due Today:")
+   
+def delete_task(task_id):
+    tasks = load_tasks()
+    updated_tasks = [task for task in tasks if task.id != task_id]
+    if len(updated_tasks) == len(tasks):
+        print(f"❌ Task with ID {task_id} not found.")
+    else:
+        save_tasks(updated_tasks)
+        print(f"🗑️ Task {task_id} deleted.")
+        
         
 def complete_task(task_id):
     tasks = load_tasks()

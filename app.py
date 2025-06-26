@@ -39,6 +39,37 @@ def complete_task(task_id):
 def main():
     parser = argparse.ArgumentParser(description="📝 CLI To-Do List Manager")
     subparsers = parser.add_subparsers(dest="command")
-    ...
-    if __name__ == "__main__":
+
+    # Add command
+    add_parser = subparsers.add_parser("add", help="Add a new task")
+    add_parser.add_argument("title", help="Task title")
+    add_parser.add_argument("description", help="Task description")
+    add_parser.add_argument("--due", help="Due date (YYYY-MM-DD)", required=False)
+
+    # List command
+    list_parser = subparsers.add_parser("list", help="List all tasks")
+    list_parser.add_argument("--today", action="store_true", help="Only show tasks due today")
+
+    # Complete command
+    complete_parser = subparsers.add_parser("complete", help="Mark a task as completed")
+    complete_parser.add_argument("id", type=int, help="Task ID to mark complete")
+
+    # Delete command
+    delete_parser = subparsers.add_parser("delete", help="Delete a task")
+    delete_parser.add_argument("id", type=int, help="Task ID to delete")
+
+    args = parser.parse_args()
+
+    if args.command == "add":
+        add_task(args.title, args.description, args.due)
+    elif args.command == "list":
+        list_tasks(today_only=args.today)
+    elif args.command == "complete":
+        complete_task(args.id)
+    elif args.command == "delete":
+        delete_task(args.id)
+    else:
+        parser.print_help()
+
+if __name__ == "__main__":
         main()

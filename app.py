@@ -15,6 +15,13 @@ def list_tasks(today_only=False):
     if today_only:
         tasks = filter_today_tasks(tasks)
         print("📅 Tasks Due Today:")
+
+    if not tasks:
+        print("No tasks found.")
+        return
+
+    for task in tasks:
+        print(task)
    
 def delete_task(task_id):
     tasks = load_tasks()
@@ -34,8 +41,7 @@ def complete_task(task_id):
             save_tasks(tasks)
             print(f"✅ Task {task_id} marked as complete.")
             return
-        
-        
+                
 def main():
     parser = argparse.ArgumentParser(description="📝 CLI To-Do List Manager")
     subparsers = parser.add_subparsers(dest="command")
